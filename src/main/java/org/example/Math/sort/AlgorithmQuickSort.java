@@ -4,11 +4,11 @@ public class AlgorithmQuickSort {
         if(array==null || array.length==0 || array.length==1) {
             return array;
         }
-        divideAndSort(array,0,array.length-1);
+        quickSort(array,0,array.length-1);
         return array;
     }
 
-    private static void divideAndSort(int[] array, int low, int high) {
+    private static void quickSort(int[] array, int low, int high) {
         int strongElement=array[((high+low)/2)];
         int i=low;
         int j=high;
@@ -27,9 +27,9 @@ public class AlgorithmQuickSort {
                 }
             }
             if(low<j)
-             divideAndSort(array,low,j);
+                quickSort(array,low,j);
             if(i<high)
-             divideAndSort(array,i,high);
+                quickSort(array,i,high);
         }
     }
 }

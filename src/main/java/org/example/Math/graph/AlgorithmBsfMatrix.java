@@ -1,4 +1,4 @@
-package org.example.Math;
+package org.example.Math.graph;
 
 import org.example.Math.model.PairCoordinate;
 import org.example.Math.model.VertexForMatrix;

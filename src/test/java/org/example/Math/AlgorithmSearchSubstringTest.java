@@ -1,5 +1,6 @@
 package org.example.Math;
 
+import org.example.Math.string.AlgorithmSearchSubstring;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -34,7 +35,7 @@ public class AlgorithmSearchSubstringTest {
     @Test
     public void findMaxUniqueSubstringLength() {
         int result;
-        result=AlgorithmSearchSubstring.findMaxUniqueSubstringLength("");
+        result= AlgorithmSearchSubstring.findMaxUniqueSubstringLength("");
         assertEquals(0,result);
 
         result=AlgorithmSearchSubstring.findMaxUniqueSubstringLength("aaaa");

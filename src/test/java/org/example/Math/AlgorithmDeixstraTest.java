@@ -1,5 +1,6 @@
 package org.example.Math;
 
+import org.example.Math.graph.AlgorithmDeixstra;
 import org.junit.Test;
 
 import static org.junit.Assert.*;

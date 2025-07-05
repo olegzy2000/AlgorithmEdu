@@ -1,4 +1,4 @@
-package org.example.Math;
+package org.example.Math.string;
 
 import java.util.HashMap;
 import java.util.HashSet;

@@ -1,5 +1,6 @@
 package org.example.Math;
 
+import org.example.Math.graph.AlgorithmBsfMatrix;
 import org.example.Math.model.PairCoordinate;
 import org.junit.Assert;
 import org.junit.Test;
@@ -17,7 +18,7 @@ public class AlgorithmBsfMatrixTest {
         };
         PairCoordinate startCoordinate=new PairCoordinate(0,0);
         PairCoordinate endCoordinate=new PairCoordinate(4,4);
-        int result=AlgorithmBsfMatrix.bsfStartWithMap(map,startCoordinate,endCoordinate);
+        int result= AlgorithmBsfMatrix.bsfStartWithMap(map,startCoordinate,endCoordinate);
         Assert.assertEquals(4,result);
 
         startCoordinate=new PairCoordinate(0,0);

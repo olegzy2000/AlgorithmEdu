@@ -1,4 +1,4 @@
-package org.example.Math.sort;
+package org.example.Math.sort.nlogn;
 
 import java.util.LinkedList;
 

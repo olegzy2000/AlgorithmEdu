@@ -1,6 +1,6 @@
 package org.example.Math;
 
-import org.example.Math.sort.AlgorithmQuickSort;
+import org.example.Math.sort.nlogn.AlgorithmQuickSort;
 import org.junit.Test;
 
 import java.util.Arrays;

@@ -1,4 +1,4 @@
-package org.example.Math;
+package org.example.Math.sort.nlogn;
 
 import org.example.Math.sort.nlogn.AlgorithmQuickSort;
 import org.junit.Test;

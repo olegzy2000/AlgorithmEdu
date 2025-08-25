@@ -1,5 +1,6 @@
 package org.example.Math.chess.model;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -7,8 +8,8 @@ public class ChessSquare {
     private int xCoordinate;
     private int yCoordinate;
 
-    private boolean isVisited=false
-    private Set<ChessSquare> neighbours;
+    private boolean isVisited=false;
+    private Set<ChessSquare> neighbours=new HashSet<>();
 
     public int getxCoordinate() {
         return xCoordinate;
@@ -36,5 +37,8 @@ public class ChessSquare {
 
     public boolean isVisited() {
         return isVisited;
+    }
+    public void setIsVisited(boolean isVisited) {
+        this.isVisited=isVisited;
     }
 }

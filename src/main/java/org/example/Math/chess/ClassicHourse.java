@@ -2,55 +2,50 @@ package org.example.Math.chess;
 
 import org.example.Math.chess.model.ChessSquare;
 
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class ClassicHourse {
-    private static int amountSteps=0;
-    public static void start(int size,int xStartPosition,int yStartPosition){
+    public static boolean start(int size,int xStartPosition,int yStartPosition){
         ChessSquare[][] matrix=new ChessSquare[size][size];
         initGraph(matrix);
         printMatrix(matrix);
-        amountSteps=1;
-        resolve(matrix,matrix[xStartPosition][yStartPosition]);
-        System.out.println(amountSteps);
+        boolean result=resolve(matrix,matrix[xStartPosition][yStartPosition],1);
         printMatrix(matrix);
+        return result;
     }
 
     private static void printMatrix(ChessSquare[][] matrix) {
        System.out.println();
        for(int i=0;i<matrix.length;i++){
            for(int j=0;j<matrix[i].length;j++){
-               System.out.print(matrix[i][j].isVisited()+" ");
+               System.out.print(" ("+matrix[i][j].isVisited()+" "+matrix[i][j].getStepNumber()+") ");
            }
            System.out.println();
        }
     }
 
-    private static void resolve(ChessSquare[][] matrix, ChessSquare current) {
-        printMatrix(matrix);
-        current.setIsVisited(true);
-        if(amountSteps==64)
-            return;
-        amountSteps++;
-        Set<ChessSquare> chessSquares=current.getNeighbours()
+    private static boolean resolve(ChessSquare[][] matrix, ChessSquare current, int amountSteps) {
+        current.setVisited(true);
+        current.setStepNumber(amountSteps);
+        if(amountSteps==matrix.length*matrix[0].length)
+            return true;
+        List<ChessSquare> chessSquares=current.getNeighbours()
                 .stream()
                 .filter(x-> !x.isVisited())
                 .sorted(Comparator.comparingInt(a -> a.getNeighbours().size()))
-                .collect(Collectors.toSet());
-        if((chessSquares==null || chessSquares.isEmpty())&& amountSteps<64){
-            amountSteps--;
-            current.setIsVisited(false);
-            return;
-        }
-        if(chessSquares.iterator().hasNext()) {
-            ChessSquare currentChessSquare = chessSquares.iterator().next();
+                .toList();
+
+        for(ChessSquare currentChessSquare : chessSquares) {
             if (!currentChessSquare.isVisited()) {
-                resolve(matrix, currentChessSquare);
+                if(resolve(matrix, currentChessSquare,amountSteps+1)){
+                    return true;
+                }
             }
         }
+        current.setVisited(false);
+        current.setStepNumber(-1);
+        return false;
     }
 
     private static void initGraph(ChessSquare[][] matrix) {

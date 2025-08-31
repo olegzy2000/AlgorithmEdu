@@ -9,6 +9,23 @@ public class ChessSquare {
     private int yCoordinate;
 
     private boolean isVisited=false;
+    private int stepNumber=-1;
+
+    public void setVisited(boolean visited) {
+        isVisited = visited;
+    }
+    public boolean isVisited() {
+        return isVisited;
+    }
+
+    public int getStepNumber() {
+        return stepNumber;
+    }
+
+    public void setStepNumber(int stepNumber) {
+        this.stepNumber = stepNumber;
+    }
+
     private Set<ChessSquare> neighbours=new HashSet<>();
 
     public int getxCoordinate() {
@@ -35,10 +52,5 @@ public class ChessSquare {
         this.neighbours = neighbours;
     }
 
-    public boolean isVisited() {
-        return isVisited;
-    }
-    public void setIsVisited(boolean isVisited) {
-        this.isVisited=isVisited;
-    }
+
 }

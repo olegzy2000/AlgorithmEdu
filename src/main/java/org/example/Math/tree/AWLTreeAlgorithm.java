@@ -32,8 +32,7 @@ public class AWLTreeAlgorithm {
                 currentNode.setRightChild(newNode);
             }
         }
-        rebalanceTree(currentNode);
-        return currentNode;
+        return rebalanceTreeV2(currentNode);
     }
 
     private static void rebalanceTree(AWLTreeNode currentNode) {
@@ -59,7 +58,26 @@ public class AWLTreeAlgorithm {
             currentNode.setRightChild(newRightNode);
         }
     }
+    private static AWLTreeNode rebalanceTreeV2(AWLTreeNode currentNode) {
+        int leftNodeCurrentBalance=calculateBalance(currentNode);
+        if(Math.abs(leftNodeCurrentBalance)>1) {
 
+            int leftNodeBalance = calculateBalance(currentNode.getLeftChild());
+            if (leftNodeBalance == -1) {
+                return rotateLeftRight(currentNode);
+            } else if (leftNodeBalance == 1) {
+                return rotateRight(currentNode);
+            }
+
+            int rightNodeBalance = calculateBalance(currentNode.getRightChild());
+            if (rightNodeBalance == -1) {
+               return rotateRightLeft(currentNode);
+            } else if (rightNodeBalance == 1) {
+               return rotateLeft(currentNode);
+            }
+        }
+        return currentNode;
+    }
     public static int calculateBalance(AWLTreeNode root) {
         if(root==null)
             return 0;
@@ -69,12 +87,13 @@ public class AWLTreeAlgorithm {
     public static int depthTraversal(AWLTreeNode root, int newDepth) {
        if(root == null)
            return newDepth;
+       newDepth++;
        int heightLeft = newDepth;
        int heightRight = newDepth;
        if(root.getRightChild() != null)
-           heightRight=depthTraversal(root.getRightChild(), newDepth+1);
+           heightRight=depthTraversal(root.getRightChild(), newDepth);
        if(root.getLeftChild() != null)
-           heightLeft=depthTraversal(root.getLeftChild(), newDepth+1);
+           heightLeft=depthTraversal(root.getLeftChild(), newDepth);
         return heightRight>heightLeft?heightRight:heightLeft;
     }
 
@@ -86,8 +105,8 @@ public class AWLTreeAlgorithm {
         AWLTreeNode newRoot = oldRoot.getRightChild();
         AWLTreeNode subtree = newRoot.getLeftChild();
 
-        newRoot.setLeftChild(oldRoot);
         oldRoot.setRightChild(subtree);
+        newRoot.setLeftChild(oldRoot);
 
         return newRoot;
     }
@@ -99,8 +118,8 @@ public class AWLTreeAlgorithm {
         AWLTreeNode newRoot = oldRoot.getLeftChild();
         AWLTreeNode subtree = newRoot.getRightChild();
 
-        newRoot.setRightChild(oldRoot);
         oldRoot.setLeftChild(subtree);
+        newRoot.setRightChild(oldRoot);
 
         return newRoot;
     }

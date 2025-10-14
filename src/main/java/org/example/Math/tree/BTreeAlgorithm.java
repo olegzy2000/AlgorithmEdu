@@ -2,10 +2,11 @@ package org.example.Math.tree;
 
 import org.example.Math.model.BTreeNode;
 
+import java.util.stream.Collectors;
+
 public class BTreeAlgorithm {
-    public BTreeNode start(int array[]){
+    public static BTreeNode start(int array[], int degrees){
         BTreeNode node=new BTreeNode();
-        node.setParent(null);
         node.setTreeDegree(2);
         node.getCurrentKeys().add(array[0]);
         node.setRoot(true);
@@ -14,14 +15,51 @@ public class BTreeAlgorithm {
         }
         return node;
     }
-    private BTreeNode addKey(BTreeNode node, int newKey) {
+    private static BTreeNode addKey(BTreeNode node, int newKey) {
          if(node.isRoot() && node.getChildren().isEmpty()){
-             node.getCurrentKeys().add(newKey);
+             if(2*node.getTreeDegree()-1>node.getCurrentKeys().size()){
+                 node.getCurrentKeys().add(newKey);
+             }
+             else {
+                 //first time where tree deep set 2
+                 int indexOfNewRoot = node.getCurrentKeys().size()/2;
+
+                 int newRootValue=node.getCurrentKeys().remove(indexOfNewRoot);
+                 node.getCurrentKeys().add(newKey);
+
+                 BTreeNode newRoot=new BTreeNode();
+                 newRoot.setTreeDegree(node.getTreeDegree());
+                 newRoot.setRoot(true);
+                 newRoot=addKey(newRoot,newRootValue);
+
+
+                 BTreeNode newLeftNode=new BTreeNode();
+                 newLeftNode.setTreeDegree(node.getTreeDegree());
+                 newLeftNode.getCurrentKeys()
+                         .addAll(node.getCurrentKeys()
+                                 .stream()
+                                 .filter(x->x<=newRootValue)
+                                 .toList());
+
+                 BTreeNode newRightNode=new BTreeNode();
+                 newRightNode.setTreeDegree(node.getTreeDegree());
+                 newRightNode.getCurrentKeys()
+                         .addAll(node.getCurrentKeys()
+                                 .stream()
+                                 .filter(x->x>newRootValue)
+                                 .toList());
+
+                 newRoot.getChildren().add(newLeftNode);
+                 newRoot.getChildren().add(newRightNode);
+                 return newRoot;
+
+             }
              return node;
          }
          else if(node.isRoot() || !node.getChildren().isEmpty()){
-             return node;
+
          }
+
          return node;
     }
 }

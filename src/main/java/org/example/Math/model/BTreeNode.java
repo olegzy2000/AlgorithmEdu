@@ -2,13 +2,14 @@ package org.example.Math.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.TreeSet;
 
 public class BTreeNode {
     private int treeDegree;
     private boolean isRoot=false;
-    private BTreeNode parent=null;
-    private TreeSet<Integer>currentKeys=new TreeSet<>();
+   // private BTreeNode parent=null;
+    private List<Integer>currentKeys=new ArrayList<>();
     private List<BTreeNode> children=new ArrayList<>();
 
     public int getTreeDegree() {
@@ -27,19 +28,19 @@ public class BTreeNode {
         isRoot = root;
     }
 
-    public BTreeNode getParent() {
-        return parent;
-    }
+    //public BTreeNode getParent() {
+    //    return parent;
+    //}
 
-    public void setParent(BTreeNode parent) {
-        this.parent = parent;
-    }
+    //public void setParent(BTreeNode parent) {
+    //    this.parent = parent;
+    //}
 
-    public TreeSet<Integer> getCurrentKeys() {
+    public List<Integer> getCurrentKeys() {
         return currentKeys;
     }
 
-    public void setCurrentKeys(TreeSet<Integer> currentKeys) {
+    public void setCurrentKeys(List<Integer> currentKeys) {
         this.currentKeys = currentKeys;
     }
 
@@ -50,9 +51,13 @@ public class BTreeNode {
     public void setChildren(List<BTreeNode> children) {
         this.children = children;
     }
+    //for root 2t-1
+    //for node 2t-1
     public int getMaxChildrenAmount(){
-        return treeDegree;
+        return 2*treeDegree-1;
     }
+    //for root 1
+    //for node t-1
     public int getMinChildrenAmount(){
         return treeDegree;
     }
@@ -61,5 +66,28 @@ public class BTreeNode {
     }
     public int getMaxKeysAmount(){
         return treeDegree;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        BTreeNode bTreeNode = (BTreeNode) o;
+        return treeDegree == bTreeNode.treeDegree && isRoot == bTreeNode.isRoot && Objects.equals(currentKeys, bTreeNode.currentKeys) && Objects.equals(children, bTreeNode.children);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(treeDegree, isRoot, currentKeys, children);
+    }
+
+    @Override
+    public String toString() {
+        return "BTreeNode{" +
+                "treeDegree=" + treeDegree +
+                ", isRoot=" + isRoot +
+               // ", parent=" + parent +
+                ", currentKeys=" + currentKeys +
+                ", children=" + children +
+                '}';
     }
 }

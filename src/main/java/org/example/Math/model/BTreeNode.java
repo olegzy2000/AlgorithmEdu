@@ -8,7 +8,7 @@ import java.util.TreeSet;
 public class BTreeNode {
     private int treeDegree;
     private boolean isRoot=false;
-   // private BTreeNode parent=null;
+    private BTreeNode parent=null;
     private List<Integer>currentKeys=new ArrayList<>();
     private List<BTreeNode> children=new ArrayList<>();
 
@@ -28,13 +28,13 @@ public class BTreeNode {
         isRoot = root;
     }
 
-    //public BTreeNode getParent() {
-    //    return parent;
-    //}
+    public BTreeNode getParent() {
+        return parent;
+    }
 
-    //public void setParent(BTreeNode parent) {
-    //    this.parent = parent;
-    //}
+    public void setParent(BTreeNode parent) {
+        this.parent = parent;
+    }
 
     public List<Integer> getCurrentKeys() {
         return currentKeys;

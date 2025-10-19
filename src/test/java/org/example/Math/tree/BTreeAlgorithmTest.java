@@ -76,5 +76,20 @@ public class BTreeAlgorithmTest {
         expected.getChildren().add(rightNode);
         assertEquals(expected,actual);
     }
-
+    @Test
+    public void searchNodeByKeysNull(){
+        assertEquals(-1,BTreeAlgorithm.searchNodeByKeys(null,-1));
+    }
+    @Test
+    public void searchNodeByKeysZeroIndex(){
+        assertEquals(0,BTreeAlgorithm.searchNodeByKeys(asList(1,3),0));
+    }
+    @Test
+    public void searchNodeByKeysMiddleIndex(){
+        assertEquals(1,BTreeAlgorithm.searchNodeByKeys(asList(1,3),2));
+    }
+    @Test
+    public void searchNodeByKeysMaxIndex(){
+        assertEquals(2,BTreeAlgorithm.searchNodeByKeys(asList(1,3),5));
+    }
 }

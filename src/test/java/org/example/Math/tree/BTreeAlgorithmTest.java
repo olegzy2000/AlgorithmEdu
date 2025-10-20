@@ -56,6 +56,7 @@ public class BTreeAlgorithmTest {
         BTreeNode actual=BTreeAlgorithm.start(array,2);
         BTreeNode expected=new BTreeNode();
         expected.getCurrentKeys().add(2);
+        expected.getCurrentKeys().add(4);
         expected.setTreeDegree(2);
         expected.setRoot(true);
 
@@ -68,7 +69,7 @@ public class BTreeAlgorithmTest {
         BTreeNode rightNode=new BTreeNode();
         rightNode.setRoot(false);
         rightNode.setTreeDegree(2);
-        rightNode.getCurrentKeys().addAll(asList(3,4));
+        rightNode.getCurrentKeys().addAll(asList(3,5,6));
         rightNode.setParent(expected);
 
 

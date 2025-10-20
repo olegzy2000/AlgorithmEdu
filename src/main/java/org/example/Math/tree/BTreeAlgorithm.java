@@ -18,7 +18,7 @@ public class BTreeAlgorithm {
         if(node==null){
             return node;
         }
-        if(!node.getChildren().isEmpty()){
+        if(!node.getChildren().isEmpty() && !seperateAdding){
             int index=searchNodeByKeys(node.getCurrentKeys(),newKey);
             return addKey(node.getChildren().get(index),newKey,false);
         }
@@ -33,10 +33,11 @@ public class BTreeAlgorithm {
                  node.getCurrentKeys().add(newKey);
 
                  BTreeNode newRoot=node.getParent();
-                 if(newRoot==null)
-                     newRoot=new BTreeNode();
-                 newRoot.setTreeDegree(node.getTreeDegree());
-                 newRoot.setRoot(node.isRoot());
+                 if(newRoot==null) {
+                     newRoot = new BTreeNode();
+                     node.setRoot(true);
+                     newRoot.setTreeDegree(node.getTreeDegree());
+                 }
                  newRoot=addKey(newRoot,newRootValue,true);
 
 
@@ -61,6 +62,7 @@ public class BTreeAlgorithm {
 
                  newRoot.getChildren().add(newLeftNode);
                  newRoot.getChildren().add(newRightNode);
+
                  return newRoot;
 
              }

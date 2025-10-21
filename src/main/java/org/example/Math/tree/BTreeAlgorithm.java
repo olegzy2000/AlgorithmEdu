@@ -7,7 +7,7 @@ public class BTreeAlgorithm {
     public static BTreeNode start(int array[], int degrees){
         BTreeNode node=new BTreeNode();
         node.setTreeDegree(2);
-        node.getCurrentKeys().add(array[0]);
+        node.addNewKey(array[0]);
         node.setRoot(true);
         for(int i=1;i<array.length;i++){
             node=addKey(node,array[i],false);
@@ -20,40 +20,42 @@ public class BTreeAlgorithm {
         }
         if(!node.getChildren().isEmpty() && !seperateAdding){
             int index=searchNodeByKeys(node.getCurrentKeys(),newKey);
-            return addKey(node.getChildren().get(index),newKey,false);
+            addKey(node.getChildren().get(index),newKey,false);
         }
         else if(node.getChildren().isEmpty() || seperateAdding){
              if(2*node.getTreeDegree()-1>node.getCurrentKeys().size()){
-                 node.getCurrentKeys().add(newKey);
+                 node.addNewKey(newKey);
              }
              else {
                  int indexOfNewRoot = node.getCurrentKeys().size()/2;
 
-                 int newRootValue=node.getCurrentKeys().remove(indexOfNewRoot);
-                 node.getCurrentKeys().add(newKey);
+                 int newRootValue=node.removeKeyByIndex(indexOfNewRoot);
 
+
+
+                 node.addNewKey(newKey);
                  BTreeNode newRoot=node.getParent();
                  if(newRoot==null) {
                      newRoot = new BTreeNode();
-                     node.setRoot(true);
+                     newRoot.setRoot(true);
                      newRoot.setTreeDegree(node.getTreeDegree());
                  }
-                 newRoot=addKey(newRoot,newRootValue,true);
 
+                 newRoot=addKey(newRoot,newRootValue,true);
+                 newRoot.getChildren().remove(node);
 
                  BTreeNode newLeftNode=new BTreeNode();
                  newLeftNode.setTreeDegree(node.getTreeDegree());
-                 newLeftNode.getCurrentKeys()
-                         .addAll(node.getCurrentKeys()
-                                 .stream()
-                                 .filter(x->x<=newRootValue)
-                                 .toList());
+
+                 newLeftNode.addListKey(node.getCurrentKeys()
+                         .stream()
+                         .filter(x->x<=newRootValue)
+                         .toList());
                  newLeftNode.setParent(newRoot);
 
                  BTreeNode newRightNode=new BTreeNode();
                  newRightNode.setTreeDegree(node.getTreeDegree());
-                 newRightNode.getCurrentKeys()
-                         .addAll(node.getCurrentKeys()
+                 newRightNode.addListKey(node.getCurrentKeys()
                                  .stream()
                                  .filter(x->x>newRootValue)
                                  .toList());

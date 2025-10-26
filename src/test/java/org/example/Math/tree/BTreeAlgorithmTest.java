@@ -29,19 +29,19 @@ public class BTreeAlgorithmTest {
         BTreeNode actual=BTreeAlgorithm.start(array,2);
 
         BTreeNode expected=new BTreeNode();
-        expected.getCurrentKeys().add(2);
+        expected.addNewKey(2);
         expected.setTreeDegree(2);
         expected.setRoot(true);
 
         BTreeNode leftNode=new BTreeNode();
         leftNode.setRoot(false);
         leftNode.setTreeDegree(2);
-        leftNode.getCurrentKeys().add(1);
+        leftNode.addNewKey(1);
 
         BTreeNode rightNode=new BTreeNode();
         rightNode.setRoot(false);
         rightNode.setTreeDegree(2);
-        rightNode.getCurrentKeys().addAll(asList(3,4));
+        rightNode.addListKey(asList(3,4));
 
         expected.getChildren().add(leftNode);
         expected.getChildren().add(rightNode);
@@ -130,6 +130,76 @@ public class BTreeAlgorithmTest {
         expected.getChildren().add(foursChild);
         assertEquals(expected,actual);
     }
+
+
+    @Test
+    public void root3LevelDeep() {
+        int []array = {1,2,3,4,5,6,7,8,9,10};
+
+        BTreeNode actual=BTreeAlgorithm.start(array,2);
+        BTreeNode expected=new BTreeNode();
+        expected.addNewKey(4);
+        expected.setTreeDegree(2);
+        expected.setRoot(true);
+
+        BTreeNode firstChild=new BTreeNode();
+        firstChild.setRoot(false);
+        firstChild.setTreeDegree(2);
+        firstChild.addNewKey(2);
+        firstChild.setParent(expected);
+
+        BTreeNode secondChild=new BTreeNode();
+        secondChild.setRoot(false);
+        secondChild.setTreeDegree(2);
+        secondChild.addNewKey(6);
+        secondChild.addNewKey(8);
+        secondChild.setParent(expected);
+
+        BTreeNode firstChildFirstChild=new BTreeNode();
+        firstChildFirstChild.setRoot(false);
+        firstChildFirstChild.setTreeDegree(2);
+        firstChildFirstChild.addNewKey(1);
+        firstChildFirstChild.setParent(firstChild);
+        firstChild.getChildren().add(firstChildFirstChild);
+
+        BTreeNode firstChildSecondChild=new BTreeNode();
+        firstChildSecondChild.setRoot(false);
+        firstChildSecondChild.setTreeDegree(2);
+        firstChildSecondChild.addNewKey(3);
+        firstChildSecondChild.setParent(firstChild);
+        firstChild.getChildren().add(firstChildSecondChild);
+
+
+
+        BTreeNode secondChildFirstChild=new BTreeNode();
+        firstChildSecondChild.setRoot(false);
+        firstChildSecondChild.setTreeDegree(2);
+        firstChildSecondChild.addNewKey(5);
+        firstChildSecondChild.setParent(secondChild);
+        secondChild.getChildren().add(secondChildFirstChild);
+
+        BTreeNode secondChildSecondChild=new BTreeNode();
+        firstChildSecondChild.setRoot(false);
+        firstChildSecondChild.setTreeDegree(2);
+        firstChildSecondChild.addNewKey(7);
+        firstChildSecondChild.setParent(secondChild);
+        secondChild.getChildren().add(secondChildSecondChild);
+
+        BTreeNode secondChildThirdChild=new BTreeNode();
+        firstChildSecondChild.setRoot(false);
+        firstChildSecondChild.setTreeDegree(2);
+        firstChildSecondChild.addNewKey(9);
+        firstChildSecondChild.addNewKey(10);
+        firstChildSecondChild.setParent(secondChild);
+        secondChild.getChildren().add(secondChildThirdChild);
+
+
+        expected.getChildren().add(firstChild);
+        expected.getChildren().add(secondChild);
+
+        assertEquals(expected,actual);
+    }
+
     @Test
     public void searchNodeByKeysNull(){
         assertEquals(-1,BTreeAlgorithm.searchNodeByKeys(null,-1));

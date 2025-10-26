@@ -66,7 +66,10 @@ public class BTreeNode {
     //for root 2t-1
     //for node 2t-1
     public int getMaxChildrenAmount(){
+        if(!isRoot)
         return 2*treeDegree-1;
+        else
+            return 2*treeDegree;
     }
     //for root 1
     //for node t-1

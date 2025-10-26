@@ -29,7 +29,8 @@ public class BTreeAlgorithm {
              else {
                  int indexOfNewRoot = node.getCurrentKeys().size()/2;
 
-                 int newRootValue=node.removeKeyByIndex(indexOfNewRoot);
+                 int newRootValue = node.removeKeyByIndex(indexOfNewRoot);
+
 
 
 
@@ -41,11 +42,12 @@ public class BTreeAlgorithm {
                      newRoot.setTreeDegree(node.getTreeDegree());
                  }
 
-                 newRoot=addKey(newRoot,newRootValue,true);
-                 newRoot.getChildren().remove(node);
+                 // newRoot=addKey(newRoot,newRootValue,true);
 
-                 BTreeNode newLeftNode=new BTreeNode();
+
+                 final BTreeNode newLeftNode=new BTreeNode();
                  newLeftNode.setTreeDegree(node.getTreeDegree());
+
 
                  newLeftNode.addListKey(node.getCurrentKeys()
                          .stream()
@@ -53,17 +55,48 @@ public class BTreeAlgorithm {
                          .toList());
                  newLeftNode.setParent(newRoot);
 
-                 BTreeNode newRightNode=new BTreeNode();
+
+
+                 final BTreeNode newRightNode=new BTreeNode();
                  newRightNode.setTreeDegree(node.getTreeDegree());
                  newRightNode.addListKey(node.getCurrentKeys()
                                  .stream()
                                  .filter(x->x>newRootValue)
                                  .toList());
-
                  newRightNode.setParent(newRoot);
 
-                 newRoot.getChildren().add(newLeftNode);
-                 newRoot.getChildren().add(newRightNode);
+
+
+                 List<BTreeNode>leftPart=node.getChildren().stream().filter(x->{
+                     return x.getCurrentKeys().stream().anyMatch(y->y<newKey);
+                 }).toList();
+
+                 leftPart.forEach(x->{
+                     x.setParent(newLeftNode);
+                 });
+
+                 newLeftNode.getChildren().addAll(leftPart);
+
+
+                 List<BTreeNode>rightPart=node.getChildren().stream().filter(x->{
+                     return x.getCurrentKeys().stream().anyMatch(y->y>=newKey);
+                 }).toList();
+
+                 rightPart.forEach(x->{
+                     x.setParent(newRightNode);
+                 });
+
+                 newRightNode.getChildren().addAll(rightPart);
+
+
+
+
+                 if(newRoot.getMaxChildrenAmount()>=newRoot.getChildren().size()+2) {
+                     newRoot.getChildren().add(newLeftNode);
+                     newRoot.getChildren().add(newRightNode);
+                 }
+                 newRoot.getChildren().remove(node);
+                 newRoot=addKey(newRoot,newRootValue,true);
 
                  return newRoot;
 

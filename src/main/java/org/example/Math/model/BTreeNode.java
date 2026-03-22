@@ -1,9 +1,6 @@
 package org.example.Math.model;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.TreeSet;
+import java.util.*;
 
 public class BTreeNode {
     private int treeDegree;
@@ -37,8 +34,23 @@ public class BTreeNode {
     }
 
     public List<Integer> getCurrentKeys() {
-        return currentKeys;
+        return Collections.unmodifiableList(currentKeys);
     }
+    public void addNewKey(Integer key) {
+        currentKeys.add(key);
+        Collections.sort(currentKeys);
+    }
+    public void addListKey(List<Integer> keys) {
+        currentKeys.addAll(keys);
+        Collections.sort(currentKeys);
+    }
+    public int removeKeyByIndex(int index) {
+        return currentKeys.remove(index);
+    }
+    public void removeKeyByValue(Integer value) {
+        currentKeys.remove(value);
+    }
+
 
     public void setCurrentKeys(List<Integer> currentKeys) {
         this.currentKeys = currentKeys;
@@ -54,7 +66,10 @@ public class BTreeNode {
     //for root 2t-1
     //for node 2t-1
     public int getMaxChildrenAmount(){
+        if(!isRoot)
         return 2*treeDegree-1;
+        else
+            return 2*treeDegree;
     }
     //for root 1
     //for node t-1

@@ -1,9 +1,6 @@
 package org.example.Math.chess;
-
 import org.example.Math.chess.model.ChessSquare;
-
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class ClassicHourse {
     public static boolean start(int size,int xStartPosition,int yStartPosition){

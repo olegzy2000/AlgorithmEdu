@@ -149,7 +149,7 @@ public class CombinationWithRepetitionTest {
         int sequenceSize = 3;
 
         List<List<Character>> result = CombinationWithRepetition.start(testArray, sequenceSize);
-
+        System.out.println(result);
         // Verify result count using combination with repetition formula: C(n+k-1, k)
         int expectedSize = calculateExpectedSize(testArray.length, sequenceSize);
         assertEquals("Result count should match combination formula", expectedSize, result.size());
